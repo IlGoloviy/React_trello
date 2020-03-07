@@ -7,7 +7,7 @@ import InProgress from './InProgress';
 import NeedsReview from './NeedsReview';
 import Approved from './Approved';
 
-import { moveTaskInColumn } from '../actions/addTask';
+import { getData, setToken, moveTaskInColumn } from '../actions/authUser';
 import { connect } from 'react-redux';
 
 const Container = styled.div`
@@ -19,8 +19,13 @@ const Container = styled.div`
   align-items: flex-start;
 `;
 
-const App = (props) => {
-  const onDragEnd = result => {
+class App extends React.Component {
+  constructor(props) {
+    super();
+    this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  onDragEnd(result) {
     const { destination, source, draggableId } = result;
 
     if(!destination) {
@@ -35,45 +40,59 @@ const App = (props) => {
     }
 
     if (source.droppableId === destination.droppableId) {
-      const tasks = props.tasks[source.droppableId].slice();
-      const taskMoved = tasks.filter(task => {
-        return task.id === draggableId;
+      const tasks = this.props.tasks[source.droppableId].slice();
+      const [ taskMoved ] = tasks.filter(task => {
+        return task.id === Number(draggableId);
       });
       tasks.splice(source.index, 1);
-      tasks.splice(destination.index, 0, ...taskMoved);
+      console.log(tasks[destination.index].seq_num)
+      taskMoved.seq_num = tasks[destination.index].seq_num - 1;
+      tasks.splice(destination.index, 0, taskMoved);
+      
   
-      props.dispatch(moveTaskInColumn(tasks, source.droppableId));
+      this.props.dispatch(moveTaskInColumn(tasks, source.droppableId));
       return;
     }
 
-    const startColumn = props.tasks[source.droppableId].slice();
-    const finishColumn = props.tasks[destination.droppableId].slice();
+    const startColumn = this.props.tasks[source.droppableId].slice();
+    const finishColumn = this.props.tasks[destination.droppableId].slice();
     const taskMoved = startColumn.filter(task => {
+      console.log(task.id, '\n', draggableId)
       return task.id === draggableId;
     });
     startColumn.splice(source.index, 1);
     finishColumn.splice(destination.index, 0, ...taskMoved);
 
-    props.dispatch(moveTaskInColumn(startColumn, source.droppableId));
-    props.dispatch(moveTaskInColumn(finishColumn, destination.droppableId));
+    this.props.dispatch(moveTaskInColumn(startColumn, source.droppableId));
+    this.props.dispatch(moveTaskInColumn(finishColumn, destination.droppableId));
 
   }
 
-  return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Container>
-        <OnHold />
-        <InProgress />
-        <NeedsReview />
-        <Approved />
-      </Container>
-    </DragDropContext>
-  );
+  render() {
+    return (
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <Container>
+          <OnHold />
+          <InProgress />
+          <NeedsReview />
+          <Approved />
+        </Container>
+      </DragDropContext>
+    );
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem('token')) {
+      this.props.dispatch(getData())
+    } else {
+      setToken();
+    }
+  }
 }
 
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks
+    tasks: state.arrTasks
   }
 }
 

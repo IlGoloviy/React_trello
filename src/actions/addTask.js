@@ -1,9 +1,4 @@
-export function addOnHold(body) {
-  return {
-    type: 'ADD_ON-HOLD',
-    payload: body
-  }
-}
+
 
 export function addInProgress(body) {
   return {
@@ -39,3 +34,4 @@ export function deleteTask(body) {
     payload: body
   }
 }
+

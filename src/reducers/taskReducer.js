@@ -2,14 +2,21 @@ export default function reducer(state = {
   OnHold: [],
   InProgress: [],
   NeedsReview: [],
-  Approved: []
+  Approved: [],
+  tasks: []
 }, action) {
 
   switch (action.type) {
-    case 'ADD_ON-HOLD': {
+    case 'GET_DATA_FULFILLED': {
       return {
         ...state,
-        OnHold: [...state.OnHold, action.payload]
+        tasks: action.payload
+      }
+    }
+    case 'ADD_TASK_FULFILLED': {
+      return {
+        ...state,
+        tasks: [...state.tasks, action.payload]
       }
     }
     case 'ADD_IN-PROGRESS': {

@@ -4,7 +4,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 import Task from './Task';
-import { addOnHold } from '../actions/addTask';
+import { addTaskOnHold } from '../actions/authUser';
 
 const Column = styled.div`
   background: #292b31;
@@ -90,10 +90,10 @@ class OnHold extends React.Component {
 
   savedTask() {
     const task = {
-      id: `f${(~~(Math.random()*1e8)).toString(16)}`,
+      row: '0',
       text: this.text.current.value
     }
-    this.props.dispatch(addOnHold(task));
+    this.props.dispatch(addTaskOnHold(task));
     this.setState({add: !this.state.add});
   }
 
@@ -122,7 +122,7 @@ class OnHold extends React.Component {
 
     return (
       <Column>
-        <ColumnDescription>on-hold ({this.props.countTasks})</ColumnDescription>
+        <ColumnDescription>on-hold ({this.props.tasks.length})</ColumnDescription>
         <Droppable droppableId={`OnHold`}>
           {provided => (
             <ColumnContent
@@ -142,8 +142,7 @@ class OnHold extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks.OnHold,
-    countTasks: state.tasks.OnHold.length
+    tasks: state.arrTasks.OnHold,
   }
 }
 

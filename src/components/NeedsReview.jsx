@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Droppable } from 'react-beautiful-dnd';
 
 import Task from './Task';
-import { addNeedsReview } from '../actions/addTask';
+import { addTaskNeedsReview } from '../actions/authUser';
 
 const Column = styled.div`
   background: #292b31;
@@ -90,10 +90,10 @@ class NeedsReview extends React.Component {
 
   savedTask() {
     const task = {
-      id: `f${(~~(Math.random()*1e8)).toString(16)}`,
+      row: `2`,
       text: this.text.current.value
     }
-    this.props.dispatch(addNeedsReview(task));
+    this.props.dispatch(addTaskNeedsReview(task));
     this.setState({add: !this.state.add});
   }
 
@@ -122,7 +122,7 @@ class NeedsReview extends React.Component {
 
     return (
       <Column>
-        <ColumnDescription>needs review ({this.props.countTasks})</ColumnDescription>
+        <ColumnDescription>needs review ({tasks.length})</ColumnDescription>
         <Droppable droppableId={`NeedsReview`}>
           {provided => (
             <ColumnContent
@@ -142,8 +142,7 @@ class NeedsReview extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks.NeedsReview,
-    countTasks: state.tasks.NeedsReview.length
+    tasks: state.arrTasks.NeedsReview,
   }
 }
 

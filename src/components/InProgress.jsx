@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Droppable } from 'react-beautiful-dnd';
 
 import Task from './Task';
-import { addInProgress } from '../actions/addTask';
+import { addTaskInProgress } from '../actions/authUser';
 
 const Column = styled.div`
   background: #292b31;
@@ -90,10 +90,10 @@ class InProgress extends React.Component {
 
   savedTask() {
     const task = {
-      id: `f${(~~(Math.random()*1e8)).toString(16)}`,
+      row: `1`,
       text: this.text.current.value
     }
-    this.props.dispatch(addInProgress(task));
+    this.props.dispatch(addTaskInProgress(task));
     this.setState({add: !this.state.add});
   }
 
@@ -122,7 +122,7 @@ class InProgress extends React.Component {
 
     return (
       <Column>
-        <ColumnDescription>in progress ({this.props.countTasks})</ColumnDescription>
+        <ColumnDescription>in progress ({tasks.length})</ColumnDescription>
         <Droppable droppableId={`InProgress`}>
           {provided => (
             <ColumnContent
@@ -142,8 +142,7 @@ class InProgress extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks.InProgress,
-    countTasks: state.tasks.InProgress.length
+    tasks: state.arrTasks.InProgress,
   }
 }
 

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Droppable } from 'react-beautiful-dnd';
 
 import Task from './Task';
-import { addApproved } from '../actions/addTask';
+import { addTaskApproved } from '../actions/authUser';
 
 const Column = styled.div`
   background: #292b31;
@@ -90,10 +90,10 @@ class Approved extends React.Component {
 
   savedTask() {
     const task = {
-      id: `f${(~~(Math.random()*1e8)).toString(16)}`,
+      row: '3',
       text: this.text.current.value
     }
-    this.props.dispatch(addApproved(task));
+    this.props.dispatch(addTaskApproved(task));
     this.setState({add: !this.state.add});
   }
 
@@ -122,7 +122,7 @@ class Approved extends React.Component {
 
     return (
       <Column>
-        <ColumnDescription>approved ({this.props.countTasks})</ColumnDescription>
+        <ColumnDescription>approved ({tasks.length})</ColumnDescription>
         <Droppable droppableId={`Approved`}>
           {provided => (
             <ColumnContent
@@ -142,8 +142,7 @@ class Approved extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks.Approved,
-    countTasks: state.tasks.Approved.length
+    tasks: state.arrTasks.Approved,
   }
 }
 
