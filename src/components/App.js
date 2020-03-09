@@ -17,6 +17,12 @@ const Container = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: flex-start;
+  @media (max-width: 950px) {
+    padding: 0 15px;
+    box-sizing: border-box;
+    overflow-x: scroll;
+    justify-content: flex-start;
+  }
 `;
 
 class App extends React.Component {
@@ -77,7 +83,6 @@ class App extends React.Component {
       }
     });
 
-    console.log(startColumn, '\n', finishColumn)
     this.props.dispatch(moveTaskInColumn(startColumn, source.droppableId));
     this.props.dispatch(moveTaskInColumn(finishColumn, destination.droppableId));
     finishColumn.forEach(task => {

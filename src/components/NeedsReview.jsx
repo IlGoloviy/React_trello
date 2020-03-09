@@ -10,7 +10,13 @@ const Column = styled.div`
   background: #292b31;
   color: #fff;
   width: 300px;
-  margin-top: 50px;
+  margin: 50px 15px;
+  @media (max-width: 1300px) {
+    width: 250px;
+  }
+  @media (max-width: 1100px) {
+    width: 200px;
+  }
 `;
 const ColumnContent = styled.div`
   padding: 10px;
@@ -21,6 +27,9 @@ const ColumnDescription = styled.h2`
   padding: 10px;
   text-transform: uppercase;
   background: #f4ce46;
+  @media (max-width: 1100px) {
+    font-size: 18px;
+  }
 `;
 const AddCardBtn = styled.h5`
   margin: 0;

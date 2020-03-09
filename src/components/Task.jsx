@@ -22,6 +22,12 @@ const BtnCansel = styled.button`
   margin-left: 250px;
   cursor: pointer;
   :focus { outline: none; }
+  @media (max-width: 1300px) {
+    margin-left: 200px;
+  }
+  @media (max-width: 1100px) {
+    margin-left: 150px;
+  }
 `;
 const Text = styled.p`
   margin: 0;
