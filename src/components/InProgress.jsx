@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Droppable } from 'react-beautiful-dnd';
 
 import Task from './Task';
-import { addTaskInProgress } from '../actions/authUser';
+import { addTaskInProgress } from '../actions/actionWithTasks';
 
 const Column = styled.div`
   background: #292b31;
@@ -142,7 +142,7 @@ class InProgress extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    tasks: state.arrTasks.InProgress,
+    tasks: state.tasks.InProgress,
   }
 }
 

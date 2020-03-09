@@ -7,7 +7,7 @@ import InProgress from './InProgress';
 import NeedsReview from './NeedsReview';
 import Approved from './Approved';
 
-import { getData, setToken, moveTaskInColumn } from '../actions/authUser';
+import { getData, moveTaskInColumn, updateTask } from '../actions/actionWithTasks';
 import { connect } from 'react-redux';
 
 const Container = styled.div`
@@ -45,27 +45,49 @@ class App extends React.Component {
         return task.id === Number(draggableId);
       });
       tasks.splice(source.index, 1);
-      console.log(tasks[destination.index].seq_num)
-      taskMoved.seq_num = tasks[destination.index].seq_num - 1;
       tasks.splice(destination.index, 0, taskMoved);
-      
+      tasks.forEach((task, i) => task.seq_num = i);
   
       this.props.dispatch(moveTaskInColumn(tasks, source.droppableId));
+      tasks.forEach(task => {
+        const body = {
+          row: task.row,
+          seq_num: task.seq_num,
+          text: task.text
+        }
+        this.props.dispatch(updateTask(body, task.id));
+      });
       return;
     }
 
     const startColumn = this.props.tasks[source.droppableId].slice();
     const finishColumn = this.props.tasks[destination.droppableId].slice();
-    const taskMoved = startColumn.filter(task => {
-      console.log(task.id, '\n', draggableId)
-      return task.id === draggableId;
+    const [ taskMoved ] = startColumn.filter(task => {
+      return task.id === Number(draggableId);
     });
     startColumn.splice(source.index, 1);
-    finishColumn.splice(destination.index, 0, ...taskMoved);
+    finishColumn.splice(destination.index, 0, taskMoved);
+    finishColumn.forEach((task, i) => {
+      task.seq_num = i;
+      const arr = ['OnHold', 'InProgress', 'NeedsReview', 'Approved'];
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === destination.droppableId) {
+          task.row = i;
+        }
+      }
+    });
 
+    console.log(startColumn, '\n', finishColumn)
     this.props.dispatch(moveTaskInColumn(startColumn, source.droppableId));
     this.props.dispatch(moveTaskInColumn(finishColumn, destination.droppableId));
-
+    finishColumn.forEach(task => {
+      const body = {
+        row: task.row,
+        seq_num: task.seq_num,
+        text: task.text
+      }
+      this.props.dispatch(updateTask(body, task.id));
+    });
   }
 
   render() {
@@ -82,17 +104,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem('token')) {
-      this.props.dispatch(getData())
-    } else {
-      setToken();
-    }
+    this.props.dispatch(getData())
   }
 }
 
 function mapStateToProps(state) {
   return {
-    tasks: state.arrTasks
+    tasks: state.tasks
   }
 }
 

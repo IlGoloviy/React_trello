@@ -84,6 +84,13 @@ export default function reducer(state = {
           Approved: action.payload
         }
       }
+      case 'UPDATE_TASK_FULFILLED': {
+        state.tasks = state.tasks.filter(task => task.id !== action.payload.id);
+        return {
+          ...state,
+          tasks: [...state.tasks, action.payload]
+        }
+      }
 
       default: {
         return state;

@@ -15,6 +15,7 @@ export function setToken() {
 }
 
 export function getData() {
+  setToken();
   return {
     type: 'GET_DATA',
     payload: 
@@ -97,5 +98,14 @@ export function moveTaskInColumn(tasks, type) {
   return {
     type: `MOVED_TASK_${type.toUpperCase()}`,
     payload: tasks
+  }
+}
+
+export function updateTask(body, id) {
+  return {
+    type: 'UPDATE_TASK',
+    payload: 
+      axios.patch(`https://trello.backend.tests.nekidaem.ru/api/v1/cards/${id}/`, body)
+      .then(res => res.data)
   }
 }

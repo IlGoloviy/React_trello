@@ -4,7 +4,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 import Task from './Task';
-import { addTaskOnHold } from '../actions/authUser';
+import { addTaskOnHold } from '../actions/actionWithTasks';
 
 const Column = styled.div`
   background: #292b31;
@@ -142,7 +142,7 @@ class OnHold extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    tasks: state.arrTasks.OnHold,
+    tasks: state.tasks.OnHold,
   }
 }
 

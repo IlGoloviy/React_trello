@@ -3,7 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-import { deleteTask } from '../actions/authUser';
+import { deleteTask } from '../actions/actionWithTasks';
 
 const DivTask = styled.div`
   background: #191a1d;
@@ -36,14 +36,6 @@ const Task = (props) => {
   const { task } = props;
 
   const deleteBlock = () => {
-    // const tasks = Object.assign({}, props.tasks);
-    // for (let key in tasks) {
-    //   tasks[key].forEach((item, i, arr) => {
-    //     if (item.id === task.id) {
-    //       arr.splice(i, 1);
-    //     }
-    //   })
-    // }
     props.dispatch(deleteTask(task.id));
   }
   
@@ -66,7 +58,7 @@ const Task = (props) => {
 
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks
+    state
   }
 }
 
