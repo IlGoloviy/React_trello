@@ -92,9 +92,7 @@ class AddTask extends React.Component {
         this.props.dispatch(addTaskApproved(task));
         break;
       }
-      default: {
-        break; 
-      }
+      default: break; 
     }
     
     this.setState({add: !this.state.add});
