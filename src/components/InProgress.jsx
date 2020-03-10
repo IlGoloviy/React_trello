@@ -46,7 +46,7 @@ class InProgress extends React.Component {
 
     return (
       <Column>
-        <ColumnDescription>in progress ({tasks.length})</ColumnDescription>
+        <ColumnDescription>in progress ({this.props.tasks.length})</ColumnDescription>
         <Droppable droppableId={`InProgress`}>
           {provided => (
             <ColumnContent

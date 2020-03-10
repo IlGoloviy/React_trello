@@ -46,7 +46,7 @@ class Approved extends React.Component {
 
     return (
       <Column>
-        <ColumnDescription>approved ({tasks.length})</ColumnDescription>
+        <ColumnDescription>approved ({this.props.tasks.length})</ColumnDescription>
         <Droppable droppableId={`Approved`}>
           {provided => (
             <ColumnContent

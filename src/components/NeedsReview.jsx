@@ -46,7 +46,7 @@ class NeedsReview extends React.Component {
 
     return (
       <Column>
-        <ColumnDescription>needs review ({tasks.length})</ColumnDescription>
+        <ColumnDescription>needs review ({this.props.tasks.length})</ColumnDescription>
         <Droppable droppableId={`NeedsReview`}>
           {provided => (
             <ColumnContent

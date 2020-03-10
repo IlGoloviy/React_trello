@@ -50,7 +50,6 @@ export function getData() {
 }
 
 export function addTaskOnHold(body) {
-  console.log('on hold')
   return {
     type: 'ADD_TASK_ON-HOLD',
     payload: 
@@ -60,7 +59,6 @@ export function addTaskOnHold(body) {
 }
 
 export function addTaskInProgress(body) {
-  console.log('in progress')
   return {
     type: 'ADD_TASK_IN-PROGRESS',
     payload: 
@@ -70,7 +68,6 @@ export function addTaskInProgress(body) {
 }
 
 export function addTaskNeedsReview(body) {
-  console.log('nedds review')
   return {
     type: 'ADD_TASK_NEEDS-REVIEW',
     payload: 
@@ -80,7 +77,6 @@ export function addTaskNeedsReview(body) {
 }
 
 export function addTaskApproved(body) {
-  console.log('approved')
   return {
     type: 'ADD_TASK_APPROVED',
     payload: 
