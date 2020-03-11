@@ -43,21 +43,11 @@ export default function reducer(state = {
       case 'DELETE_TASK_FULFILLED': {
         return {
           ...state,
-          tasks: state.tasks.filter(task => {
-            return task.id !== action.payload;
-          }),
-          OnHold: state.OnHold.filter(task => {
-            return task.id !== action.payload
-          }),
-          InProgress: state.InProgress.filter(task => {
-            return task.id !== action.payload
-          }),
-          NeedsReview: state.NeedsReview.filter(task => {
-            return task.id !== action.payload
-          }),
-          Approved: state.Approved.filter(task => {
-            return task.id !== action.payload
-          })
+          tasks: state.tasks.filter(task => task.id !== action.payload),
+          OnHold: state.OnHold.filter(task => task.id !== action.payload),
+          InProgress: state.InProgress.filter(task => task.id !== action.payload),
+          NeedsReview: state.NeedsReview.filter(task => task.id !== action.payload),
+          Approved: state.Approved.filter(task => task.id !== action.payload)
         }
       }
       case 'MOVED_TASK_ONHOLD': {

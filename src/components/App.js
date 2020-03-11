@@ -2,11 +2,9 @@ import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
-import OnHold from './OnHold';
-import InProgress from './InProgress';
-import NeedsReview from './NeedsReview';
-import Approved from './Approved';
+import Column from './Column';
 
+import { setToken } from '../actions/actionAuth';
 import { getData, moveTaskInColumn, updateTask } from '../actions/actionWithTasks';
 import { connect } from 'react-redux';
 
@@ -96,26 +94,51 @@ class App extends React.Component {
   }
 
   render() {
+    const OnHold = {
+      nameColumn: 'OnHold',
+      idColumn: '0',
+      background: '#fb7e46'
+    }
+    const InProgress = {
+      nameColumn: 'InProgress',
+      idColumn: '1',
+      background: '#2a92bf'
+    }
+    const NeedsReview = {
+      nameColumn: 'NeedsReview',
+      idColumn: '2',
+      background: '#f4ce46'
+    }
+    const Approved = {
+      nameColumn: 'Approved',
+      idColumn: '3',
+      background: '#00b961'
+    }
+
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Container>
-          <OnHold />
-          <InProgress />
-          <NeedsReview />
-          <Approved />
+          <Column props={OnHold} />
+          <Column props={InProgress} />
+          <Column props={NeedsReview} />
+          <Column props={Approved} />
         </Container>
       </DragDropContext>
     );
   }
 
   componentDidMount() {
-    this.props.dispatch(getData())
+    if (localStorage.getItem('token')) {
+      this.props.dispatch(getData())
+    } else {
+      setToken()
+    }
   }
 }
 
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks
+    tasks: state.tasks,
   }
 }
 

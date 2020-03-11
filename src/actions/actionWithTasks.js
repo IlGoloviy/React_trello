@@ -1,21 +1,11 @@
 import axios from 'axios';
+import { reloadToken } from './actionAuth';
 
 const token = localStorage.getItem('token');
 axios.defaults.headers.common['Authorization'] =  'JWT ' + token;
 
-export function setToken() {
-  axios.defaults.headers.post['Content-Type'] = 'application/json';
-  axios.post('https://trello.backend.tests.nekidaem.ru/api/v1/users/login/', {
-    "username": "illia",
-	  "password": "12qwasaszx"
-  }).then(res => {
-    const { token } = res.data;
-    localStorage.setItem('token', token);
-  })
-}
-
-export function getData() {
-  setToken();
+export function getData(token) {
+  reloadToken();
   return {
     type: 'GET_DATA',
     payload: 
@@ -24,61 +14,19 @@ export function getData() {
         const tasks = res.data;
         const data = {
           tasks,
-          OnHold: [],
-          InProgress: [],
-          NeedsReview: [],
-          Approved: []
+          OnHold: tasks.filter(task => task.row === '0'),
+          InProgress: tasks.filter(task => task.row === '1'),
+          NeedsReview: tasks.filter(task => task.row === '2'),
+          Approved: tasks.filter(task => task.row === '3')
         }
-        for (let i = 0; i < tasks.length; i++) {
-          if (tasks[i].row === '0') {
-            data.OnHold.push(tasks[i])
-          }
-          if (tasks[i].row === '1') {
-            data.InProgress.push(tasks[i])
-          }
-          if (tasks[i].row === '2') {
-            data.NeedsReview.push(tasks[i])
-          }
-          if (tasks[i].row === '3') {
-            data.Approved.push(tasks[i])
-          }
-        }
-
         return data;
       })
   }
 }
 
-export function addTaskOnHold(body) {
+export function addTasks(body, type) {
   return {
-    type: 'ADD_TASK_ON-HOLD',
-    payload: 
-      axios.post('https://trello.backend.tests.nekidaem.ru/api/v1/cards/', body)
-      .then(res => res.data)
-  }
-}
-
-export function addTaskInProgress(body) {
-  return {
-    type: 'ADD_TASK_IN-PROGRESS',
-    payload: 
-      axios.post('https://trello.backend.tests.nekidaem.ru/api/v1/cards/', body)
-      .then(res => res.data)
-  }
-}
-
-export function addTaskNeedsReview(body) {
-  return {
-    type: 'ADD_TASK_NEEDS-REVIEW',
-    payload: 
-      axios.post('https://trello.backend.tests.nekidaem.ru/api/v1/cards/', body)
-      .then(res => res.data)
-  }
-}
-
-export function addTaskApproved(body) {
-  return {
-    type: 'ADD_TASK_APPROVED',
+    type,
     payload: 
       axios.post('https://trello.backend.tests.nekidaem.ru/api/v1/cards/', body)
       .then(res => res.data)

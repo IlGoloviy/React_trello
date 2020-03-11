@@ -2,7 +2,7 @@ import React, { createRef } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-import { addTaskOnHold, addTaskInProgress, addTaskNeedsReview, addTaskApproved } from '../actions/actionWithTasks';
+import { addTasks } from '../actions/actionWithTasks';
 
 const AddCardBtn = styled.h5`
   margin: 0;
@@ -77,19 +77,19 @@ class AddTask extends React.Component {
     }
     switch (this.props.props) {
       case '0': {
-        this.props.dispatch(addTaskOnHold(task));
+        this.props.dispatch(addTasks(task, 'ADD_TASK_ON-HOLD'));
         break;
       }
       case '1': {
-        this.props.dispatch(addTaskInProgress(task));
+        this.props.dispatch(addTasks(task, 'ADD_TASK_IN-PROGRESS'));
         break;
       }
       case '2': {
-        this.props.dispatch(addTaskNeedsReview(task));
+        this.props.dispatch(addTasks(task, 'ADD_TASK_NEEDS-REVIEW'));
         break;
       }
       case '3': {
-        this.props.dispatch(addTaskApproved(task));
+        this.props.dispatch(addTasks(task, 'ADD_TASK_APPROVED'));
         break;
       }
       default: break; 
