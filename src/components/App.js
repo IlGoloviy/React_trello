@@ -132,6 +132,7 @@ class App extends React.Component {
       this.props.dispatch(getData())
     } else {
       setToken()
+      this.props.dispatch(getData())
     }
   }
 }

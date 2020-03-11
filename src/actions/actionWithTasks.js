@@ -4,13 +4,18 @@ import { reloadToken } from './actionAuth';
 const token = localStorage.getItem('token');
 axios.defaults.headers.common['Authorization'] =  'JWT ' + token;
 
-export function getData(token) {
-  reloadToken();
+export function getData() {
   return {
     type: 'GET_DATA',
     payload: 
-      axios.get('https://trello.backend.tests.nekidaem.ru/api/v1/cards/')
-      .then(res => {
+      axios({
+        method:'get',
+        url:'https://trello.backend.tests.nekidaem.ru/api/v1/cards/',
+        auth: {
+          username: 'illia',
+          password: '12qwasaszx'
+        }
+      }).then(res => {
         const tasks = res.data;
         const data = {
           tasks,
@@ -25,6 +30,7 @@ export function getData(token) {
 }
 
 export function addTasks(body, type) {
+  reloadToken();
   return {
     type,
     payload: 
@@ -34,6 +40,7 @@ export function addTasks(body, type) {
 }
 
 export function deleteTask(id) {
+  reloadToken();
   return {
     type: 'DELETE_TASK',
     payload:
@@ -43,6 +50,7 @@ export function deleteTask(id) {
 }
 
 export function moveTaskInColumn(tasks, type) {
+  reloadToken();
   return {
     type: `MOVED_TASK_${type.toUpperCase()}`,
     payload: tasks
