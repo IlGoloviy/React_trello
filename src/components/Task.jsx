@@ -28,6 +28,9 @@ const BtnCansel = styled.button`
   @media (max-width: 1100px) {
     margin-left: 150px;
   }
+  @media (max-width: 950px) {
+    margin-left: 250px;
+  }
 `;
 const Text = styled.p`
   margin: 0;

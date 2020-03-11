@@ -18,8 +18,7 @@ const Container = styled.div`
   @media (max-width: 950px) {
     padding: 0 15px;
     box-sizing: border-box;
-    overflow-x: scroll;
-    justify-content: flex-start;
+    flex-wrap: wrap;
   }
 `;
 

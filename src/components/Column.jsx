@@ -17,6 +17,9 @@ const Column = styled.div`
   @media (max-width: 1100px) {
     width: 200px;
   }
+  @media (max-width: 950px) {
+    width: 300px;
+  }
 `;
 const ColumnContent = styled.div`
   padding: 10px;

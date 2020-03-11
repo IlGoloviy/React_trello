@@ -52,6 +52,9 @@ const AddCardBtnCansel = styled.button`
   color: #a2a5ad;
   font-size: 34px;
   cursor: pointer;
+  :focus {
+    outline: none;
+  }
 `;
 
 class AddTask extends React.Component {

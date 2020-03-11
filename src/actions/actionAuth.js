@@ -12,10 +12,10 @@ export function setToken() {
 }
 
 export function reloadToken() {
-  const data = {
-    token: localStorage.getItem('token')
-  }
   const token = localStorage.getItem('token');
+  const data = {
+    token
+  }
   axios.defaults.headers.common['Authorization'] =  'JWT ' + token;
   axios.post(`https://trello.backend.tests.nekidaem.ru/api/v1/users/refresh_token/`, data)
     .then(res => localStorage.setItem('token', res.data.token))
