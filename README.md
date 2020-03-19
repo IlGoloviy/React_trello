@@ -1,4 +1,4 @@
-# kanban-board on React (test app from [Nekidaem](https://nekidaem.ru/))
+# kanban-board (Trello) on React from [Nekidaem](https://nekidaem.ru/)
 
 ### run the following commands to start the project:
 
