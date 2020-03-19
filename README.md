@@ -1,5 +1,12 @@
 # kanban-board on React (test app from [Nekidaem](https://nekidaem.ru/))
 
+### run the following commands to start the project:
+
+```
+npm i
+npm start
+```
+
 Kanban board has four fixed columns in each of which you can **add** tasks, **delete** unnecessary tasks, and **move** tasks both inside and between columns
 
 Kанбан дошка має чотири фіксовані стовбці в кожному з яких можна додавати завдання, видаляти непотрібні завдання, і переміщати завдання як всередині так і між стовбцями
